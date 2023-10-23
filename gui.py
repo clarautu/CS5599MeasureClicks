@@ -103,11 +103,8 @@ class gui:
 
     # Click event that starts the test
     def start(self):
-        # Grab the correct image, according to current polarity
-        if self.currentMode == "Dark Mode":
-            pixmap = QPixmap('circle_inverted.png')
-        else:
-            pixmap = QPixmap('circle.png')
+        # Assign the circle image as a pixmap - circle color is rgb(0,128,0)
+        pixmap = QPixmap('alteredCircle.png')
 
         # Run 5 trials
         trialCount = 0
