@@ -20,9 +20,11 @@ class gui(QWidget):
         self.setMouseTracking(True)
         self.startTime = -1
         self.counter = 0
-        self.trials = 5
+        self.trials = 10
+        self.testCounter = 1
         self.testing = False
         self.rand = random
+        self.fileName = "results/participant" + str(time.time()) + ".txt"
         self.rows = 8
         self.columns = 15
         self.currentMode = ""
@@ -153,14 +155,21 @@ class gui(QWidget):
             return
 
         timeToClick = time.time() - self.startTime
-        msg = QMessageBox()
+        file = open(self.fileName, "a")
+        if self.counter == 0:
+            file.write("Test " + str(self.testCounter) + "\n")
+        file.write("\tMode: " + self.currentMode + " - Trial " + str(self.counter) +
+                   "\n\t\tTime to click: " + str(timeToClick) +"\n\t\tMouse coords: ( %d : %d )\n" % (event.x(), event.y()))
+        file.close()
+        '''msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
         msg.setText("Time to click: " + str(timeToClick) +"\nMouse coords: ( %d : %d )" % (event.x(), event.y()))
         msg.setWindowTitle("Click Measured")
-        msg.exec_()
+        msg.exec_()'''
         self.counter += 1
         if self.counter == self.trials:
             self.counter = 0
+            self.testCounter += 1
             self.endTest()
         else:
             self.endTest()
