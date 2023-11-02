@@ -25,6 +25,8 @@ class gui(QWidget):
         self.testing = False
         self.rand = random
         self.fileName = "results/participant" + str(time.time()) + ".txt"
+        if not os.path.isdir("results"):
+            os.mkdir("results")
         self.rows = 8
         self.columns = 15
         self.currentMode = ""
