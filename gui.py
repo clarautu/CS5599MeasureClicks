@@ -4,6 +4,7 @@ import random
 import signal
 import sys
 import time
+from ClickLabel import ClickLabel
 
 from whichpyqt import PYQT_VER
 if PYQT_VER == 'PYQT5':
@@ -49,7 +50,7 @@ class gui(QWidget):
         testArea.setContentsMargins(100, 100, 100, 100)
         for i in range(self.rows):
             for j in range(self.columns):
-                temp = QLabel("")
+                temp = ClickLabel("")
                 self.testCells.append(temp)
                 #temp.setScaledContents(True)
                 # Green seems to be the best color that has the same visibility in both polarities
@@ -112,6 +113,25 @@ class gui(QWidget):
         # Shouldn't get here
         raise Exception("Current mode label not found")
 
+    # Method that coordinates the testing methods and handles file saving
+    def testBootStrap(self, x, y, distance):
+        timeToClick = time.time() - self.startTime
+        file = open(self.fileName, "a")
+        if self.counter == 0:
+            file.write("Test " + str(self.testCounter) + "\n")
+        file.write("\tMode: " + self.currentMode + " - Trial " + str(self.counter) +
+                   "\n\t\tTime to click: " + str(timeToClick) + "\n\t\tMouse coords: ( %d : %d )" % (
+                   x, y) + "\n\t\tDistance: " + str(distance) + "\n")
+        file.close()
+        self.counter += 1
+        if self.counter == self.trials:
+            self.counter = 0
+            self.testCounter += 1
+            self.endTest(True)
+        else:
+            self.endTest(False)
+            self.start()
+
     # Click event that starts the test
     def start(self):
         # Allow click tracking
@@ -124,14 +144,9 @@ class gui(QWidget):
         target = self.rand.randint(0, (self.rows * self.columns) - 1)
         count = 0  # Track current index
 
-        # Loop over testCells and assign the pixmap to the target cell
-        for item in self.testCells:
-            if count == target:
-                item.setPixmap(pixmap)
-                item.setScaledContents(True)
-                break
-            else:
-                count += 1
+        # Assign the pixmap to the target cell
+        self.testCells[target].setPixmap(pixmap)
+        self.testCells[target].setScaledContents(True)
 
         # Loop through children and hide buttons and status label
         for child in self.children():
@@ -140,6 +155,9 @@ class gui(QWidget):
             elif type(child) == QLabel:
                 if child.text() != "":
                     child.hide()
+
+        # Connect the click event to testBootStrap
+        self.testCells[target].clicked.connect(self.testBootStrap)
 
         # Update window and start the timer
         self.repaint()
@@ -160,6 +178,7 @@ class gui(QWidget):
                 elif type(child) == QLabel:
                     if child.text() != "":
                         child.show()
+            # Add a pause that keeps the next trial from beginning until a specified time has passed
         else:
             # Clear the test cells
             for item in self.testCells:
@@ -167,32 +186,7 @@ class gui(QWidget):
 
         self.repaint()  # Update the window
 
-    # Mouse click event - measures time from circle displaying to user click and click position
-    def mousePressEvent(self, event):
-        # If not testing, don't measure click
-        if not self.testing:
-            return
 
-        timeToClick = time.time() - self.startTime
-        file = open(self.fileName, "a")
-        if self.counter == 0:
-            file.write("Test " + str(self.testCounter) + "\n")
-        file.write("\tMode: " + self.currentMode + " - Trial " + str(self.counter) +
-                   "\n\t\tTime to click: " + str(timeToClick) +"\n\t\tMouse coords: ( %d : %d )\n" % (event.x(), event.y()))
-        file.close()
-        '''msg = QMessageBox()
-        msg.setIcon(QMessageBox.Critical)
-        msg.setText("Time to click: " + str(timeToClick) +"\nMouse coords: ( %d : %d )" % (event.x(), event.y()))
-        msg.setWindowTitle("Click Measured")
-        msg.exec_()'''
-        self.counter += 1
-        if self.counter == self.trials:
-            self.counter = 0
-            self.testCounter += 1
-            self.endTest(True)
-        else:
-            self.endTest(False)
-            self.start()
 
 
 if __name__ == '__main__':

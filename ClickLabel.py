@@ -10,39 +10,30 @@ else:
 
 
 class ClickLabel(QLabel):
+    clicked = pyqtSignal(int, int, float)
+
     def __init__(self, parent=None):
-        QLabel.__init__(self, parent)
+        super(ClickLabel, self).__init__(parent)
         self.setMouseTracking(True)
+        self.clicked.connect(self.handle_click)
 
     # Mouse click event - measures time from circle displaying to user click and click position
     def mousePressEvent(self, event):
-        # Only want click event to happen on label with image
-        # When label is selected, swap with this custom class
-        # Then, click event will need to send notice to gui that it has been clicked
-        #       - will also want to send mouse location and relative coordinates
-        #   - do this by calling gui method that is made just for this purpose
-        msg = QMessageBox()
+        if self.pixmap() is not None:
+            center_x = self.width() / 2
+            center_y = self.height() / 2
+            distance = ((event.x() - center_x) ** 2 + (event.y() - center_y) ** 2) ** 0.5
+            self.clicked.emit(event.x(), event.y(), distance)
+
+
+    def handle_click(self, x, y, distance):
+        pass
+        '''msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
-        msg.setText("Time to click: " + str(0.0) + "\nMouse coords: ( %d : %d )" % (event.x(), event.y()))
+        msg.setText("Time to click: " + str(0.0) + "\nMouse coords: (%d : %d)" % (x, y) +
+                    "\nDistance to center: {:.2f}".format(distance))
+        #msg.setText("Time to click: " + str(0.0) + "\nMouse coords: ( %d : %d )" % (self.xCoord, self.yCoord))
         msg.setWindowTitle("Click Measured - ClickLabel")
-        msg.exec_()
+        msg.exec_()'''
 
 
-
-            # # If not testing, don't measure click
-            # if not self.testing:
-            #     return
-            #
-            # timeToClick = time.time() - self.startTime
-            # msg = QMessageBox()
-            # msg.setIcon(QMessageBox.Critical)
-            # msg.setText("Time to click: " + str(timeToClick) + "\nMouse coords: ( %d : %d )" % (event.x(), event.y()))
-            # msg.setWindowTitle("Click Measured")
-            # msg.exec_()
-            # self.counter += 1
-            # if self.counter == self.trials:
-            #     self.counter = 0
-            #     self.endTest()
-            # else:
-            #     self.endTest()
-            #     self.startTest()
