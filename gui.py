@@ -5,6 +5,7 @@ import signal
 import sys
 import time
 from ClickLabel import ClickLabel
+from CountDownTimer import CountDownTimer
 
 from whichpyqt import PYQT_VER
 if PYQT_VER == 'PYQT5':
@@ -18,22 +19,29 @@ else:
 class gui(QWidget):
     def __init__(self):
         super().__init__()
-        self.setMouseTracking(True)  # Allows the program to track where the cursor is
+        #self.setMouseTracking(True)  # Allows the program to track where the cursor is
         self.startTime = -1  # Variable to track test start time
         self.counter = 0  # Variable to track which trial number we are on
-        self.trials = 10  # Number of trials to complete, per test instance
+        self.trials = 3  # Number of trials to complete, per test instance
         self.testCounter = 1  # Variable to track the current test number -- each participant will be tested 4 times
         self.testing = False  # Variable tracking whether a test is running or not
         self.rand = random  # Instance of random
+
         # Name of file to save to -- 'participant[currentTime].txt -- anonymous and no duplicate file names
         self.fileName = "results/participant" + str(time.time()) + ".txt"
         # Check if directory to save results in exists -- create it if it doesn't
         if not os.path.isdir("results"):
             os.mkdir("results")
+
         self.rows = 8  # Number of rows in the testing table
         self.columns = 15  # Number of columns in the testing table
         self.testCells = []  # List holding all labels used for testing
         self.currentMode = ""  # Variable to track what the current screen polarity is
+
+        self.disableTime = 60000
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.enableButtons)
+
         self.SetUp()
         self.switchMode()
         self.Show()
@@ -179,12 +187,34 @@ class gui(QWidget):
                     if child.text() != "":
                         child.show()
             # Add a pause that keeps the next trial from beginning until a specified time has passed
+            self.disableButtons()
         else:
             # Clear the test cells
             for item in self.testCells:
                 item.clear()
 
         self.repaint()  # Update the window
+
+    def disableButtons(self):
+        for child in self.children():
+            if type(child) == QPushButton:
+                child.setEnabled(False)
+
+        self.showCountdown()
+
+    def enableButtons(self):
+        for child in self.children():
+            if type(child) == QPushButton:
+                child.setEnabled(True)
+
+    def showCountdown(self):
+        dialog = CountDownTimer(self)
+        dialog.countdownInterrupted.connect(self.enableButtons)
+        dialog.startCountdown(self.disableTime)
+        result = dialog.exec_()  # Blocking call, waits for the dialog to close
+        if result == QDialog.Accepted:
+            # The countdown dialog closed, re-enable buttons
+            self.enableButtons()
 
 
 
