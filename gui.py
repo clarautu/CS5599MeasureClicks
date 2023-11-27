@@ -1,5 +1,4 @@
 import os.path
-import pathlib
 import random
 import signal
 import sys
@@ -22,7 +21,7 @@ class gui(QWidget):
         #self.setMouseTracking(True)  # Allows the program to track where the cursor is
         self.startTime = -1  # Variable to track test start time
         self.counter = 0  # Variable to track which trial number we are on
-        self.trials = 3  # Number of trials to complete, per test instance
+        self.trials = 10  # Number of trials to complete, per test instance
         self.testCounter = 1  # Variable to track the current test number -- each participant will be tested 4 times
         self.testing = False  # Variable tracking whether a test is running or not
         self.rand = random  # Instance of random
@@ -38,9 +37,9 @@ class gui(QWidget):
         self.testCells = []  # List holding all labels used for testing
         self.currentMode = ""  # Variable to track what the current screen polarity is
 
-        self.disableTime = 60000
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.enableButtons)
+        self.disableTime = 60000  # 60 seconds - time to wait after trial completion
+        self.timer = QTimer(self)  # A timer for the disabled period
+        self.timer.timeout.connect(self.enableButtons)  # Connect the timer's timeout call to enableButtons()
 
         self.SetUp()
         self.switchMode()
@@ -195,6 +194,7 @@ class gui(QWidget):
 
         self.repaint()  # Update the window
 
+    # Method that disables all the push buttons
     def disableButtons(self):
         for child in self.children():
             if type(child) == QPushButton:
@@ -202,11 +202,13 @@ class gui(QWidget):
 
         self.showCountdown()
 
+    # Method that enables all the push buttons
     def enableButtons(self):
         for child in self.children():
             if type(child) == QPushButton:
                 child.setEnabled(True)
 
+    # Method that setups and shows the countdown dialog
     def showCountdown(self):
         dialog = CountDownTimer(self)
         dialog.countdownInterrupted.connect(self.enableButtons)
