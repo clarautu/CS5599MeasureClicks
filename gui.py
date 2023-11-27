@@ -31,6 +31,7 @@ class gui(QWidget):
             os.mkdir("results")
         self.rows = 8  # Number of rows in the testing table
         self.columns = 15  # Number of columns in the testing table
+        self.testCells = []  # List holding all labels used for testing
         self.currentMode = ""  # Variable to track what the current screen polarity is
         self.SetUp()
         self.switchMode()
@@ -49,6 +50,7 @@ class gui(QWidget):
         for i in range(self.rows):
             for j in range(self.columns):
                 temp = QLabel("")
+                self.testCells.append(temp)
                 #temp.setScaledContents(True)
                 # Green seems to be the best color that has the same visibility in both polarities
                 #       fuchsia was the second best I tested
@@ -119,38 +121,51 @@ class gui(QWidget):
         pixmap = QPixmap('alteredCircle.png')
 
         # Set target as a random integer on the range of zero to rows * columns
-        target = self.rand.randint(0, (self.rows * self.columns))
+        target = self.rand.randint(0, (self.rows * self.columns) - 1)
         count = 0  # Track current index
+
+        # Loop over testCells and assign the pixmap to the target cell
+        for item in self.testCells:
+            if count == target:
+                item.setPixmap(pixmap)
+                item.setScaledContents(True)
+                break
+            else:
+                count += 1
 
         # Loop through children and hide buttons and status label
         for child in self.children():
             if type(child) == QPushButton:
                 child.hide()
             elif type(child) == QLabel:
-                if child.text() == "":
-                    if count == target:  # Set pixmap to target label
-                        child.setPixmap(pixmap)
-                        child.setScaledContents(True)
-                        break
-                    else:
-                        count += 1
-                else:
+                if child.text() != "":
                     child.hide()
-        self.repaint()  # Update window
+
+        # Update window and start the timer
+        self.repaint()
         self.startTime = time.time()
 
     # Method that ends the test
-    def endTest(self):
+    def endTest(self, endOfTrials):
         self.testing = False
-        for child in self.children():
-            if type(child) == QPushButton:
-                child.show()
-            elif type(child) == QLabel:
-                if child.text() == "":
-                    child.clear()
-                else:
+
+        if endOfTrials:
+            # Clear the test cells
+            for item in self.testCells:
+                item.clear()
+            # Loop over all children and show the buttons and the mode label
+            for child in self.children():
+                if type(child) == QPushButton:
                     child.show()
-        self.repaint()
+                elif type(child) == QLabel:
+                    if child.text() != "":
+                        child.show()
+        else:
+            # Clear the test cells
+            for item in self.testCells:
+                item.clear()
+
+        self.repaint()  # Update the window
 
     # Mouse click event - measures time from circle displaying to user click and click position
     def mousePressEvent(self, event):
@@ -174,9 +189,9 @@ class gui(QWidget):
         if self.counter == self.trials:
             self.counter = 0
             self.testCounter += 1
-            self.endTest()
+            self.endTest(True)
         else:
-            self.endTest()
+            self.endTest(False)
             self.start()
 
 
