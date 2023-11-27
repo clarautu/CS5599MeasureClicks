@@ -1,10 +1,8 @@
-import sys
-
 from whichpyqt import PYQT_VER
 if PYQT_VER == 'PYQT5':
     from PyQt5.QtGui import QFont
-    from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QDialog, QLabel, QProgressBar, QHBoxLayout, QSizePolicy, QDesktopWidget
-    from PyQt5.QtCore import QTimer, Qt, QSize, QDateTime, pyqtSignal
+    from PyQt5.QtWidgets import QVBoxLayout, QDialog, QLabel, QProgressBar, QDesktopWidget
+    from PyQt5.QtCore import QTimer, Qt, QSize, pyqtSignal
 else:
     raise Exception('Unsupported Version of PyQt: {}'.format(PYQT_VER))
 
@@ -56,11 +54,6 @@ class CountDownTimer(QDialog):
         self.setFixedSize(newSize)
 
     def closeEvent(self, event):
-        # You can choose either option below:
-
-        # Option 1: Prevent the dialog from being closed
-        # event.ignore()
-
-        # Option 2: Emit a signal to indicate countdown interruption
+        # Emit a signal to indicate countdown interruption
         self.countdownInterrupted.emit()
         event.accept()
