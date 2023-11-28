@@ -25,6 +25,7 @@ class gui(QWidget):
         self.testCounter = 1  # Variable to track the current test number -- each participant will be tested 4 times
         self.testing = False  # Variable tracking whether a test is running or not
         self.rand = random  # Instance of random
+        self.currentTarget = -1  # Tracks the current target test cell
 
         # Name of file to save to -- 'participant[currentTime].txt -- anonymous and no duplicate file names
         self.fileName = "results/participant" + str(time.time()) + ".txt"
@@ -147,13 +148,17 @@ class gui(QWidget):
         # Assign the circle image as a pixmap - circle color is rgb(0,128,0)
         pixmap = QPixmap('alteredCircle.png')
 
-        # Set target as a random integer on the range of zero to rows * columns
-        target = self.rand.randint(0, (self.rows * self.columns) - 1)
-        count = 0  # Track current index
+        while (True):
+            # Set target as a random integer on the range of zero to rows * columns
+            target = self.rand.randint(0, (self.rows * self.columns) - 1)
+            if target != self.currentTarget:  # Only break out of loop if target is different from the current target
+                self.currentTarget = target
+                break
+
 
         # Assign the pixmap to the target cell
-        self.testCells[target].setPixmap(pixmap)
-        self.testCells[target].setScaledContents(True)
+        self.testCells[self.currentTarget].setPixmap(pixmap)
+        self.testCells[self.currentTarget].setScaledContents(True)
 
         # Loop through children and hide buttons and status label
         for child in self.children():
@@ -164,7 +169,7 @@ class gui(QWidget):
                     child.hide()
 
         # Connect the click event to testBootStrap
-        self.testCells[target].clicked.connect(self.testBootStrap)
+        self.testCells[self.currentTarget].clicked.connect(self.testBootStrap)
 
         # Update window and start the timer
         self.repaint()
@@ -175,9 +180,8 @@ class gui(QWidget):
         self.testing = False
 
         if endOfTrials:
-            # Clear the test cells
-            for item in self.testCells:
-                item.clear()
+            # Clear the target cell
+            self.testCells[self.currentTarget].clear()
             # Loop over all children and show the buttons and the mode label
             for child in self.children():
                 if type(child) == QPushButton:
@@ -188,9 +192,8 @@ class gui(QWidget):
             # Add a pause that keeps the next trial from beginning until a specified time has passed
             self.disableButtons()
         else:
-            # Clear the test cells
-            for item in self.testCells:
-                item.clear()
+            # Clear the target cell
+            self.testCells[self.currentTarget].clear()
 
         self.repaint()  # Update the window
 
@@ -207,6 +210,7 @@ class gui(QWidget):
         for child in self.children():
             if type(child) == QPushButton:
                 child.setEnabled(True)
+        self.switchMode()
 
     # Method that setups and shows the countdown dialog
     def showCountdown(self):

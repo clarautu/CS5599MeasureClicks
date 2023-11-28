@@ -14,6 +14,8 @@ class ClickLabel(QLabel):
 
     def __init__(self, parent=None):
         super(ClickLabel, self).__init__(parent)
+        self.cooldownTime = 500  # 500 milliseconds cooldown
+        self.lastClickTime = 0
         self.setMouseTracking(True)
         self.clicked.connect(self.handle_click)
 
@@ -23,7 +25,12 @@ class ClickLabel(QLabel):
             center_x = self.width() / 2
             center_y = self.height() / 2
             distance = ((event.x() - center_x) ** 2 + (event.y() - center_y) ** 2) ** 0.5
-            self.clicked.emit(event.x(), event.y(), distance)
+
+            currentTime = int(round(time.time() * 1000))  # Convert to milliseconds
+            # Only register the click if it has been longer than the cooldown period
+            if currentTime - self.lastClickTime > self.cooldownTime:
+                self.lastClickTime = currentTime
+                self.clicked.emit(event.x(), event.y(), distance)
 
 
     def handle_click(self, x, y, distance):
