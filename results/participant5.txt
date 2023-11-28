@@ -1,0 +1,164 @@
+Test 1
+	Mode: Dark Mode - Trial 0
+		Time to click: 1.6389408111572266
+		Mouse coords: ( 106 : 117 )
+		Distance: 16.53027525481654
+	Mode: Dark Mode - Trial 1
+		Time to click: 1.2664549350738525
+		Mouse coords: ( 92 : 129 )
+		Distance: 33.15493930020081
+	Mode: Dark Mode - Trial 2
+		Time to click: 1.2168686389923096
+		Mouse coords: ( 104 : 121 )
+		Distance: 19.1637678967368
+	Mode: Dark Mode - Trial 3
+		Time to click: 1.4041993618011475
+		Mouse coords: ( 132 : 95 )
+		Distance: 23.04886114323222
+	Mode: Dark Mode - Trial 4
+		Time to click: 1.8617432117462158
+		Mouse coords: ( 119 : 122 )
+		Distance: 6.946221994724902
+	Mode: Dark Mode - Trial 5
+		Time to click: 1.2215139865875244
+		Mouse coords: ( 115 : 124 )
+		Distance: 10.965856099730654
+	Mode: Dark Mode - Trial 6
+		Time to click: 1.7195801734924316
+		Mouse coords: ( 144 : 125 )
+		Distance: 23.30772404161333
+	Mode: Dark Mode - Trial 7
+		Time to click: 1.6751306056976318
+		Mouse coords: ( 124 : 115 )
+		Distance: 1.8027756377319946
+	Mode: Dark Mode - Trial 8
+		Time to click: 1.4140801429748535
+		Mouse coords: ( 116 : 137 )
+		Distance: 21.982947936980608
+	Mode: Dark Mode - Trial 9
+		Time to click: 1.2921528816223145
+		Mouse coords: ( 114 : 123 )
+		Distance: 11.01135777277262
+Test 2
+	Mode: Light Mode - Trial 0
+		Time to click: 1.6074211597442627
+		Mouse coords: ( 110 : 120 )
+		Distance: 13.124404748406688
+	Mode: Light Mode - Trial 1
+		Time to click: 1.6186175346374512
+		Mouse coords: ( 127 : 99 )
+		Distance: 17.585505395068974
+	Mode: Light Mode - Trial 2
+		Time to click: 1.031381368637085
+		Mouse coords: ( 134 : 129 )
+		Distance: 17.356554957709783
+	Mode: Light Mode - Trial 3
+		Time to click: 1.788773536682129
+		Mouse coords: ( 104 : 126 )
+		Distance: 21.02974084481309
+	Mode: Light Mode - Trial 4
+		Time to click: 1.388960361480713
+		Mouse coords: ( 116 : 123 )
+		Distance: 9.5524865872714
+	Mode: Light Mode - Trial 5
+		Time to click: 1.037407636642456
+		Mouse coords: ( 126 : 114 )
+		Distance: 4.031128874149275
+	Mode: Light Mode - Trial 6
+		Time to click: 1.0028445720672607
+		Mouse coords: ( 116 : 110 )
+		Distance: 8.845903006477066
+	Mode: Light Mode - Trial 7
+		Time to click: 1.1478636264801025
+		Mouse coords: ( 122 : 117 )
+		Distance: 1.118033988749895
+	Mode: Light Mode - Trial 8
+		Time to click: 1.162353754043579
+		Mouse coords: ( 114 : 117 )
+		Distance: 8.558621384311845
+	Mode: Light Mode - Trial 9
+		Time to click: 1.3482167720794678
+		Mouse coords: ( 102 : 110 )
+		Distance: 21.360009363293827
+Test 3
+	Mode: Dark Mode - Trial 0
+		Time to click: 1.4066274166107178
+		Mouse coords: ( 123 : 114 )
+		Distance: 2.0615528128088303
+	Mode: Dark Mode - Trial 1
+		Time to click: 1.0945801734924316
+		Mouse coords: ( 117 : 140 )
+		Distance: 24.62214450449026
+	Mode: Dark Mode - Trial 2
+		Time to click: 1.1760156154632568
+		Mouse coords: ( 130 : 118 )
+		Distance: 7.762087348130012
+	Mode: Dark Mode - Trial 3
+		Time to click: 0.0
+		Mouse coords: ( 130 : 118 )
+		Distance: 7.762087348130012
+	Mode: Dark Mode - Trial 4
+		Time to click: 0.9011235237121582
+		Mouse coords: ( 115 : 96 )
+		Distance: 21.360009363293827
+	Mode: Dark Mode - Trial 5
+		Time to click: 0.6385831832885742
+		Mouse coords: ( 104 : 84 )
+		Distance: 36.96281915655244
+	Mode: Dark Mode - Trial 6
+		Time to click: 0.9648656845092773
+		Mouse coords: ( 116 : 97 )
+		Distance: 20.081085628023203
+	Mode: Dark Mode - Trial 7
+		Time to click: 1.1225557327270508
+		Mouse coords: ( 116 : 119 )
+		Distance: 7.158910531638177
+	Mode: Dark Mode - Trial 8
+		Time to click: 1.1442079544067383
+		Mouse coords: ( 107 : 107 )
+		Distance: 17.92344832893492
+	Mode: Dark Mode - Trial 9
+		Time to click: 0.0
+		Mouse coords: ( 107 : 107 )
+		Distance: 17.92344832893492
+Test 4
+	Mode: Light Mode - Trial 0
+		Time to click: 1.655848503112793
+		Mouse coords: ( 126 : 107 )
+		Distance: 9.656603957913983
+	Mode: Light Mode - Trial 1
+		Time to click: 0.9233348369598389
+		Mouse coords: ( 129 : 105 )
+		Distance: 12.776932339180638
+	Mode: Light Mode - Trial 2
+		Time to click: 1.0967087745666504
+		Mouse coords: ( 127 : 123 )
+		Distance: 8.32165848854662
+	Mode: Light Mode - Trial 3
+		Time to click: 1.3866252899169922
+		Mouse coords: ( 116 : 124 )
+		Distance: 10.307764064044152
+	Mode: Light Mode - Trial 4
+		Time to click: 0.0
+		Mouse coords: ( 116 : 124 )
+		Distance: 10.307764064044152
+	Mode: Light Mode - Trial 5
+		Time to click: 1.119852066040039
+		Mouse coords: ( 116 : 123 )
+		Distance: 9.5524865872714
+	Mode: Light Mode - Trial 6
+		Time to click: 0.9431891441345215
+		Mouse coords: ( 115 : 110 )
+		Distance: 9.604686356149273
+	Mode: Light Mode - Trial 7
+		Time to click: 1.200007438659668
+		Mouse coords: ( 146 : 114 )
+		Distance: 23.58495283014151
+	Mode: Light Mode - Trial 8
+		Time to click: 0.987938642501831
+		Mouse coords: ( 121 : 105 )
+		Distance: 11.10180165558726
+	Mode: Light Mode - Trial 9
+		Time to click: 0.0
+		Mouse coords: ( 121 : 105 )
+		Distance: 11.10180165558726
